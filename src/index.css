@@ -5,16 +5,16 @@
 
 @layer base {
   :root {
-    --background: 0 0% 83%;
+    --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
-    --card: 0 0% 83%;
+    --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
 
-    --popover: 0 0% 83%;
+    --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 212 100% 35%;
+    --primary: 210 100% 50%;
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 40% 96.1%;
@@ -29,7 +29,7 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 60%; 
+    --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
 
@@ -43,7 +43,7 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-[#c0c0c0] text-foreground;
     font-family: "MS Sans Serif", "Tahoma", sans-serif;
     margin: 0;
     padding: 0;
@@ -91,6 +91,10 @@
   @apply border-t border-[#808080] border-b border-b-white;
 }
 
+.top-menu-item {
+  @apply px-2 py-0.5 cursor-pointer hover:bg-primary hover:text-white;
+}
+
 .song-list {
   @apply font-mono text-xs;
 }
@@ -111,8 +115,30 @@
   @apply py-0.5 px-2;
 }
 
+.hot-list-row {
+  @apply border-b border-[#d0d0d0] cursor-pointer;
+}
+
+.active-row {
+  @apply bg-primary text-white;
+}
+
+.active-row td {
+  @apply text-white;
+}
+
 .player-control {
   @apply win98-button flex items-center justify-center w-8 h-8;
+}
+
+.tab-button {
+  @apply border-2 border-solid bg-[#c0c0c0] px-3 py-1 text-sm;
+  border-color: #ffffff #808080 #808080 #ffffff;
+}
+
+.tab-button.active {
+  @apply bg-[#c0c0c0] font-bold;
+  border-color: #808080 #ffffff #c0c0c0 #808080;
 }
 
 /* Status dot colors for connection status */
@@ -130,4 +156,12 @@
 
 .status-dot-red {
   @apply bg-red-600;
+}
+
+.napster-menubar {
+  @apply flex bg-[#c0c0c0] border-b border-[#808080];
+}
+
+.napster-tab-bar {
+  @apply flex bg-[#c0c0c0] px-1 py-1 space-x-1;
 }

@@ -1,11 +1,18 @@
 
-import React, { useState, useEffect } from 'react';
-import RetroWindow from '../components/RetroWindow';
-import SearchBar from '../components/SearchBar';
+import React, { useState } from 'react';
+import Header from '../components/Header';
+import Advertisement from '../components/Advertisement';
+import TabNav from '../components/TabNav';
 import SongList, { Song } from '../components/SongList';
 import Player from '../components/Player';
 import StatusBar from '../components/StatusBar';
 import { mockSongs } from '../data/mockSongs';
+import SearchTab from '../components/tabs/SearchTab';
+import LibraryTab from '../components/tabs/LibraryTab';
+import ChatTab from '../components/tabs/ChatTab';
+import HotListTab from '../components/tabs/HotListTab';
+import TransferTab from '../components/tabs/TransferTab';
+import FeedbackTab from '../components/tabs/FeedbackTab';
 
 // Enhanced mock songs with connection and ping data
 const enhancedMockSongs = mockSongs.map(song => ({
@@ -16,26 +23,11 @@ const enhancedMockSongs = mockSongs.map(song => ({
 
 const Index = () => {
   const [songs, setSongs] = useState<Song[]>(enhancedMockSongs);
-  const [filteredSongs, setFilteredSongs] = useState<Song[]>(enhancedMockSongs);
   const [currentSong, setCurrentSong] = useState<Song | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [connectedUsers, setConnectedUsers] = useState(4892);
-  const [filesAvailable, setFilesAvailable] = useState(438721);
-
-  const handleSearch = (query: {artist: string, title: string, maxResults: number}) => {
-    if (!query.artist.trim() && !query.title.trim()) {
-      setFilteredSongs(songs);
-      return;
-    }
-    
-    const filtered = songs.filter(song => 
-      (!query.artist.trim() || song.artist.toLowerCase().includes(query.artist.toLowerCase())) && 
-      (!query.title.trim() || song.title.toLowerCase().includes(query.title.toLowerCase()))
-    );
-    
-    // Apply max results
-    setFilteredSongs(filtered.slice(0, query.maxResults));
-  };
+  const [activeTab, setActiveTab] = useState('search');
+  const [connectedUsers, setConnectedUsers] = useState(155068);
+  const [filesAvailable, setFilesAvailable] = useState(605);
 
   const handleSongSelect = (song: Song) => {
     setCurrentSong(song);
@@ -66,45 +58,42 @@ const Index = () => {
     setIsPlaying(true);
   };
 
-  // Simulate changing user counts for realism
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setConnectedUsers(prev => prev + Math.floor(Math.random() * 10) - 5);
-      setFilesAvailable(prev => prev + Math.floor(Math.random() * 100) - 50);
-    }, 5000);
-    
-    return () => clearInterval(interval);
-  }, []);
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 'chat':
+        return <ChatTab />;
+      case 'library':
+        return <LibraryTab songs={songs} onSongSelect={handleSongSelect} />;
+      case 'search':
+        return <SearchTab songs={songs} onSongSelect={handleSongSelect} />;
+      case 'hotlist':
+        return <HotListTab songs={songs} onSongSelect={handleSongSelect} />;
+      case 'transfer':
+        return <TransferTab />;
+      case 'feedback':
+        return <FeedbackTab />;
+      default:
+        return <SearchTab songs={songs} onSongSelect={handleSongSelect} />;
+    }
+  };
 
   return (
-    <div className="min-h-screen h-screen bg-[#c0c0c0] flex flex-col p-0 overflow-hidden">
-      <div className="win98-titlebar w-full">
-        <div className="flex items-center gap-1">
-          <img src="/napster-icon.png" alt="Napster" className="w-4 h-4 mr-1" />
-          Napster v2.0 Beta 8
+    <div className="h-screen flex flex-col overflow-hidden">
+      <Header />
+      <div className="flex-1 p-1 flex flex-col overflow-hidden">
+        <Advertisement />
+        <TabNav activeTab={activeTab} setActiveTab={setActiveTab} />
+        <div className="flex-1 overflow-hidden py-1">
+          {renderTabContent()}
         </div>
-      </div>
-      <div className="flex-1 overflow-hidden p-1">
-        <div className="h-full win98-window">
-          <div className="win98-window-inner h-full">
-            <div className="p-1 h-full flex flex-col">
-              <SearchBar onSearch={handleSearch} />
-              <SongList 
-                songs={filteredSongs} 
-                onSongSelect={handleSongSelect} 
-                className="flex-1"
-              />
-              <Player 
-                currentSong={currentSong}
-                isPlaying={isPlaying}
-                onTogglePlay={handleTogglePlay}
-                onPrev={handlePrev}
-                onNext={handleNext}
-              />
-              <StatusBar connectedUsers={connectedUsers} filesAvailable={filesAvailable} />
-            </div>
-          </div>
-        </div>
+        <Player 
+          currentSong={currentSong}
+          isPlaying={isPlaying}
+          onTogglePlay={handleTogglePlay}
+          onPrev={handlePrev}
+          onNext={handleNext}
+        />
+        <StatusBar connectedUsers={connectedUsers} filesAvailable={filesAvailable} />
       </div>
     </div>
   );
