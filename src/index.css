@@ -1,0 +1,133 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 83%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 83%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 83%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 212 100% 35%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 60%; 
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "MS Sans Serif", "Tahoma", sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  html, body, #root {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+/* Retro Windows styling */
+.win98-window {
+  @apply border-2 border-solid;
+  border-color: #dfdfdf #000000 #000000 #dfdfdf;
+  box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 0.1);
+}
+
+.win98-window-inner {
+  @apply border-2 border-solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+}
+
+.win98-titlebar {
+  @apply bg-primary text-white px-1 py-0.5 flex items-center justify-between font-bold text-sm;
+  letter-spacing: -0.5px;
+}
+
+.win98-button {
+  @apply border-2 border-solid bg-[#c0c0c0] px-2 py-0.5 active:bg-[#a0a0a0] font-normal text-sm;
+  border-color: #ffffff #808080 #808080 #ffffff;
+}
+
+.win98-button:active {
+  border-color: #808080 #ffffff #ffffff #808080;
+}
+
+.win98-inset {
+  @apply border-2 border-solid bg-white;
+  border-color: #808080 #ffffff #ffffff #808080;
+}
+
+.win98-divider {
+  @apply border-t border-[#808080] border-b border-b-white;
+}
+
+.song-list {
+  @apply font-mono text-xs;
+}
+
+.song-list tr:nth-child(odd) {
+  @apply bg-[#eaeaea];
+}
+
+.song-list tr:hover {
+  @apply bg-[#d0d8fd];
+}
+
+.song-row {
+  @apply border-b border-[#d0d0d0] cursor-pointer;
+}
+
+.song-row td {
+  @apply py-0.5 px-2;
+}
+
+.player-control {
+  @apply win98-button flex items-center justify-center w-8 h-8;
+}
+
+/* Status dot colors for connection status */
+.status-dot {
+  @apply inline-block w-2 h-2 rounded-full mr-1;
+}
+
+.status-dot-green {
+  @apply bg-green-600;
+}
+
+.status-dot-yellow {
+  @apply bg-yellow-500;
+}
+
+.status-dot-red {
+  @apply bg-red-600;
+}
